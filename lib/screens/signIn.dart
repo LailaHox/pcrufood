@@ -20,15 +20,11 @@ class _SignInState extends State<SignIn> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Container(
-                width: 100,
-                child: Image.asset('images/logoaccount.png'),
-              ),
-              // MyStyle().showlogoaccount(),
+              MyStyle().showlogoaccount(),
               MyStyle().mySizebox(),
               MyStyle().showTitle('PCRU FOOD'),
               MyStyle().mySizebox(),
-              userForm(),
+              idForm(),
               MyStyle().mySizebox(),
               passwordForm(),
               MyStyle().mySizebox(),
@@ -49,7 +45,7 @@ class _SignInState extends State<SignIn> {
         ),
       );
 
-  Widget userForm() => Container(
+  Widget idForm() => Container(
         width: 250,
         child: TextField(
           decoration: InputDecoration(
@@ -58,7 +54,7 @@ class _SignInState extends State<SignIn> {
               color: MyStyle().darkcolor,
             ),
             labelStyle: TextStyle(color: MyStyle().darkcolor),
-            labelText: 'Username',
+            labelText: 'ID',
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: MyStyle().darkcolor),
             ),
