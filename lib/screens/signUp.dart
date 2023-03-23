@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:pcrufood/utility/checknull.dart';
 import 'package:pcrufood/utility/mystyle.dart';
 
 class SignUp extends StatefulWidget {
@@ -9,6 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  var id, password, name, idcard, phonenumber;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +62,7 @@ class _SignUpState extends State<SignUp> {
   Widget idFormRegis() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => id = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.account_box,
@@ -78,6 +83,7 @@ class _SignUpState extends State<SignUp> {
   Widget passwordRegis() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => password = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.lock,
@@ -98,6 +104,7 @@ class _SignUpState extends State<SignUp> {
   Widget ownerName() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => name = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.face,
@@ -118,6 +125,7 @@ class _SignUpState extends State<SignUp> {
   Widget ownerIDcard() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => idcard = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.padding,
@@ -138,6 +146,7 @@ class _SignUpState extends State<SignUp> {
   Widget ownerPhone() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => phonenumber = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.phone,
@@ -159,7 +168,23 @@ class _SignUpState extends State<SignUp> {
         width: 250,
         height: 40,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            print(
+                'id =$id,password=$password,name=$name,idcard=$idcard,phonenumber=$phonenumber');
+            if (id == null ||
+                id.isEmpty ||
+                password == null ||
+                password.isEmpty ||
+                name == null ||
+                name.isEmpty ||
+                idcard == null ||
+                idcard.isEmpty ||
+                phonenumber == null ||
+                phonenumber.isEmpty) {
+              print('คุณกรอกข้อมูลไม่ครบถ้วน');
+              checknull(context, 'คุณกรอกข้อมูลไม่ครบถ้วน');
+            }
+          },
           child: Text('Register'),
         ),
       );
