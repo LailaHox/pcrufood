@@ -6,7 +6,7 @@ class MyStyle {
 
   SizedBox mySizebox() => SizedBox(
         width: 10,
-        height: 15,
+        height: 10,
       );
 
   Text showTitle(String title) => Text(

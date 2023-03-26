@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pcrufood/utility/checknull.dart';
 import 'package:pcrufood/utility/mystyle.dart';
@@ -12,7 +10,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  var id, password, name, idcard, phonenumber;
+  String? chooseType;
+  String? id, password, name, idcard, phonenumber;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +30,17 @@ class _SignUpState extends State<SignUp> {
           MyStyle().mySizebox(),
           passwordRegis(),
           MyStyle().mySizebox(),
-          ownerName(),
+          textName(),
           MyStyle().mySizebox(),
-          ownerIDcard(),
+          textIDcard(),
           MyStyle().mySizebox(),
-          ownerPhone(),
+          textPhone(),
+          MyStyle().mySizebox(),
+          memberRadio(),
+          MyStyle().mySizebox(),
+          ownerRadio(),
+          MyStyle().mySizebox(),
+          riderRadio(),
           MyStyle().mySizebox(),
           regisButton(),
           MyStyle().mySizebox(),
@@ -83,6 +89,7 @@ class _SignUpState extends State<SignUp> {
   Widget passwordRegis() => Container(
         width: 250,
         child: TextField(
+          obscureText: true,
           onChanged: (value) => password = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
@@ -101,7 +108,7 @@ class _SignUpState extends State<SignUp> {
         ),
       );
 
-  Widget ownerName() => Container(
+  Widget textName() => Container(
         width: 250,
         child: TextField(
           onChanged: (value) => name = value.trim(),
@@ -122,7 +129,7 @@ class _SignUpState extends State<SignUp> {
         ),
       );
 
-  Widget ownerIDcard() => Container(
+  Widget textIDcard() => Container(
         width: 250,
         child: TextField(
           onChanged: (value) => idcard = value.trim(),
@@ -143,7 +150,7 @@ class _SignUpState extends State<SignUp> {
         ),
       );
 
-  Widget ownerPhone() => Container(
+  Widget textPhone() => Container(
         width: 250,
         child: TextField(
           onChanged: (value) => phonenumber = value.trim(),
@@ -164,26 +171,103 @@ class _SignUpState extends State<SignUp> {
         ),
       );
 
+  Widget memberRadio() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 230,
+            child: Row(
+              children: <Widget>[
+                Radio(
+                    value: 'Member',
+                    groupValue: chooseType,
+                    onChanged: (value) => setState(
+                          () {
+                            chooseType = value;
+                          },
+                        )),
+                Text(
+                  'สมาชิก',
+                  style: TextStyle(color: MyStyle().darkcolor),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget ownerRadio() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 230,
+            child: Row(
+              children: <Widget>[
+                Radio(
+                    value: 'Owner',
+                    groupValue: chooseType,
+                    onChanged: (value) => setState(
+                          () {
+                            chooseType = value;
+                          },
+                        )),
+                Text(
+                  'เจ้าของร้านค้า',
+                  style: TextStyle(color: MyStyle().darkcolor),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget riderRadio() => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 230,
+            child: Row(
+              children: <Widget>[
+                Radio(
+                    value: 'Rider',
+                    groupValue: chooseType,
+                    onChanged: (value) => setState(
+                          () {
+                            chooseType = value;
+                          },
+                        )),
+                Text(
+                  'คนส่งอาหาร',
+                  style: TextStyle(color: MyStyle().darkcolor),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+
   Widget regisButton() => Container(
         width: 250,
         height: 40,
         child: ElevatedButton(
           onPressed: () {
             print(
-                'id =$id,password=$password,name=$name,idcard=$idcard,phonenumber=$phonenumber');
+                'id =$id,password=$password,name=$name,idcard=$idcard,phonenumber=$phonenumber,chooseType = $chooseType');
             if (id == null ||
-                id.isEmpty ||
+                id!.isEmpty ||
                 password == null ||
-                password.isEmpty ||
+                password!.isEmpty ||
                 name == null ||
-                name.isEmpty ||
+                name!.isEmpty ||
                 idcard == null ||
-                idcard.isEmpty ||
+                idcard!.isEmpty ||
                 phonenumber == null ||
-                phonenumber.isEmpty) {
+                phonenumber!.isEmpty) {
               print('คุณกรอกข้อมูลไม่ครบถ้วน');
               checknull(context, 'คุณกรอกข้อมูลไม่ครบถ้วน');
-            }
+            } else if (chooseType == null) {
+              checknull(context, 'กรุณาเลือกประเภทของผู้สมัคร');
+            } else {}
           },
           child: Text('Register'),
         ),
