@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:pcrufood/utility/checknull.dart';
+import 'package:pcrufood/utility/normalDialog.dart';
 import 'package:pcrufood/utility/mystyle.dart';
 
 class SignUp extends StatefulWidget {
@@ -10,8 +11,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String? chooseType;
-  String? id, password, name, idcard, phonenumber;
+  String? id, password, name, idcard, phonenumber, chooseType;
 
   @override
   Widget build(BuildContext context) {
@@ -263,13 +263,41 @@ class _SignUpState extends State<SignUp> {
                 idcard!.isEmpty ||
                 phonenumber == null ||
                 phonenumber!.isEmpty) {
-              print('คุณกรอกข้อมูลไม่ครบถ้วน');
-              checknull(context, 'คุณกรอกข้อมูลไม่ครบถ้วน');
+              normalDialog(context, 'คุณกรอกข้อมูลไม่ครบถ้วน');
             } else if (chooseType == null) {
-              checknull(context, 'กรุณาเลือกประเภทของผู้สมัคร');
-            } else {}
+              normalDialog(context, 'กรุณาเลือกประเภทของผู้สมัคร');
+            } else {
+              checkUser();
+            }
           },
           child: Text('Register'),
         ),
       );
+  Future<Null> checkUser() async {
+    String url =
+        'http://192.168.1.49/test/getIDWhereUser.php?isAdd=true&id=$id';
+    try {
+      Response response = await Dio().get(url);
+      if (response.toString() == 'null') {
+        registerThread();
+      } else {
+        normalDialog(context, 'ID ซ้ำ กรุณาเปลี่ยน ID ใหม่');
+      }
+    } catch (e) {}
+  }
+
+  Future<Null> registerThread() async {
+    String url =
+        'http://192.168.1.49/test/addUser.php?isAdd=true&id=$id&password=$password&name=$name&idcard=$idcard&phonenumber=$phonenumber&chooseType=$chooseType';
+    try {
+      Response respons = await Dio().get(url);
+      print('res =$respons');
+
+      if (respons.toString() == 'true') {
+        Navigator.pop(context);
+      } else {
+        normalDialog(context, 'ไม่สามารถสมัครได้ กรุณาลองใหม่');
+      }
+    } catch (e) {}
+  }
 }

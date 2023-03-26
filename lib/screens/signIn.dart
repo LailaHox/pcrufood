@@ -1,5 +1,13 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pcrufood/model/user_model.dart';
+import 'package:pcrufood/screens/main_Member.dart';
+import 'package:pcrufood/screens/main_Owner.dart';
+import 'package:pcrufood/screens/main_Rider.dart';
 import 'package:pcrufood/utility/mystyle.dart';
+import 'package:pcrufood/utility/normalDialog.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -9,6 +17,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  String? id, password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +49,60 @@ class _SignInState extends State<SignIn> {
         width: 250,
         height: 30,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            if (id == null ||
+                id!.isEmpty ||
+                password == null ||
+                password!.isEmpty) {
+              normalDialog(context, 'คุณกรอกข้อมูลไม่ครบถ้วน');
+            } else {
+              checkAuthen();
+            }
+          },
           child: Text('Login'),
         ),
       );
 
+  Future<Null> checkAuthen() async {
+    String url =
+        'http://192.168.1.49/test/getIDWhereUser.php?isAdd=true&id=$id';
+    try {
+      Response response = await Dio().get(url);
+      print('res = $response');
+
+      var result = json.decode(response.data);
+      print('result = $result');
+      for (var map in result) {
+        UserModel userModel = UserModel.fromJson(map);
+        if (password == userModel.password) {
+          String? chooseType = userModel.chooseType;
+          if (chooseType == 'Member') {
+            routeToService(MainMember());
+          } else if (chooseType == 'Owner') {
+            routeToService(MainOwner());
+          } else if (chooseType == 'Rider') {
+            routeToService(MainRider());
+          } else {
+            normalDialog(context, 'ERROR');
+          }
+        } else {
+          normalDialog(context, 'Password ผิด');
+        }
+      }
+    } catch (e) {}
+  }
+
+  void routeToService(Widget myWidget) {
+    MaterialPageRoute route = MaterialPageRoute(
+      builder: (context) => myWidget,
+    );
+    Navigator.pushAndRemoveUntil(context, route, (Route) => false);
+  }
+
   Widget idForm() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => id = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.account_box,
@@ -68,6 +123,8 @@ class _SignInState extends State<SignIn> {
   Widget passwordForm() => Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => password = value.trim(),
+          obscureText: true,
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.lock,
