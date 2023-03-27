@@ -8,6 +8,7 @@ import 'package:pcrufood/screens/main_Owner.dart';
 import 'package:pcrufood/screens/main_Rider.dart';
 import 'package:pcrufood/utility/mystyle.dart';
 import 'package:pcrufood/utility/normalDialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -18,6 +19,7 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   String? id, password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +65,7 @@ class _SignInState extends State<SignIn> {
         ),
       );
 
-  Future<Null> checkAuthen() async {
+  Future<void> checkAuthen() async {
     String url =
         'http://192.168.1.49/test/getIDWhereUser.php?isAdd=true&id=$id';
     try {
@@ -77,11 +79,12 @@ class _SignInState extends State<SignIn> {
         if (password == userModel.password) {
           String? chooseType = userModel.chooseType;
           if (chooseType == 'Member') {
-            routeToService(MainMember());
+            routeToService(MainMember(), userModel);
           } else if (chooseType == 'Owner') {
-            routeToService(MainOwner());
+            routeToService(MainOwner(), userModel);
           } else if (chooseType == 'Rider') {
-            routeToService(MainRider());
+            routeToService(MainRider(), userModel);
+            // function myfunction(method,method)
           } else {
             normalDialog(context, 'ERROR');
           }
@@ -89,10 +92,18 @@ class _SignInState extends State<SignIn> {
           normalDialog(context, 'Password ผิด');
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
-  void routeToService(Widget myWidget) {
+  // function myfunction(param,param)
+  Future<void> routeToService(myWidget, userModel) async {
+    // Future<void> routeToService(Widget myWidget, UserModel userModel) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('id', userModel.id);
+    preferences.setString('name', userModel.name);
+    preferences.setString('chooseType', userModel.chooseType);
     MaterialPageRoute route = MaterialPageRoute(
       builder: (context) => myWidget,
     );

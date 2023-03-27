@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pcrufood/screens/main_Member.dart';
+import 'package:pcrufood/screens/main_Owner.dart';
+import 'package:pcrufood/screens/main_Rider.dart';
 import 'package:pcrufood/screens/signIn.dart';
 import 'package:pcrufood/screens/signUp.dart';
+import 'package:pcrufood/utility/normalDialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,6 +15,38 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkPreference();
+  }
+
+  Future<void> checkPreference() async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? choosType = preferences.getString('chooseType');
+      if (choosType != null && choosType.isNotEmpty) {
+        if (choosType == 'Member') {
+          routeToService(MainMember());
+        } else if (choosType == 'Owner') {
+          routeToService(MainOwner());
+        } else if (choosType == 'Rider') {
+          routeToService(MainRider());
+        } else {
+          normalDialog(context, 'ERROR Type');
+        }
+      }
+    } catch (e) {}
+  }
+
+  void routeToService(Widget myWidget) {
+    MaterialPageRoute route = MaterialPageRoute(
+      builder: (context) => MainMember(),
+    );
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

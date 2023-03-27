@@ -8,13 +8,13 @@ class UserModel {
   String? chooseType;
 
   UserModel(
-      {this.idUser,
-      this.id,
-      this.password,
-      this.name,
-      this.idcard,
-      this.phonenumber,
-      this.chooseType});
+      {required this.idUser,
+      required this.id,
+      required this.password,
+      required this.name,
+      required this.idcard,
+      required this.phonenumber,
+      required this.chooseType});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     idUser = json['idUser'];
@@ -28,13 +28,13 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idUser'] = this.idUser;
-    data['id'] = this.id;
-    data['password'] = this.password;
-    data['name'] = this.name;
-    data['idcard'] = this.idcard;
-    data['phonenumber'] = this.phonenumber;
-    data['chooseType'] = this.chooseType;
+    data['idUser'] = idUser;
+    data['id'] = id;
+    data['password'] = password;
+    data['name'] = name;
+    data['idcard'] = idcard;
+    data['phonenumber'] = phonenumber;
+    data['chooseType'] = chooseType;
     return data;
   }
 }
