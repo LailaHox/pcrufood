@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              MyStyle().showlogoaccount(),
+              MyStyle().showlogo('logoaccount.png'),
               MyStyle().mySizebox(),
               MyStyle().showTitle('PCRU FOOD'),
               MyStyle().mySizebox(),

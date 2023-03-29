@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
   Widget myLogo() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          MyStyle().showlogoaccount(),
+          MyStyle().showlogo('logoaccount.png'),
         ],
       );
 

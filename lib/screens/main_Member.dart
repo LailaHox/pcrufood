@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utility/mystyle.dart';
 import '../utility/signOut.dart';
 
 class MainMember extends StatefulWidget {
@@ -32,15 +33,29 @@ class _MainMemberState extends State<MainMember> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(nameUser == null ? 'Main Member' : '$nameUser '),
-          actions: <Widget>[
-            IconButton(
-                onPressed: () => signOut(),
-                icon: Icon(
-                  Icons.exit_to_app_outlined,
-                ))
-          ]),
+        appBar: AppBar(
+            title: Text(nameUser == null ? 'Main Member' : '$nameUser '),
+            actions: <Widget>[
+              IconButton(
+                  onPressed: () => signOut(),
+                  icon: Icon(
+                    Icons.exit_to_app_outlined,
+                  ))
+            ]),
+        drawer: showDrawer());
+  }
+
+  Drawer showDrawer() => Drawer(
+        child: ListView(
+          children: <Widget>[showHead()],
+        ),
+      );
+
+  UserAccountsDrawerHeader showHead() {
+    return UserAccountsDrawerHeader(
+      currentAccountPicture: MyStyle().showlogo('logomember.png'),
+      accountName: Text('Name Member'),
+      accountEmail: Text('Login'),
     );
   }
 }

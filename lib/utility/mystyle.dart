@@ -15,13 +15,22 @@ class MyStyle {
             fontSize: 24, color: Colors.blue, fontWeight: FontWeight.bold),
       );
 
-  Container showlogoaccount() {
+  Container showlogo(String namePic) {
     return Container(
       width: 100,
       child: Image.asset(
-        'images/logoaccount.png',
+        'images/$namePic',
         width: 120,
         height: 100,
+      ),
+    );
+  }
+
+  BoxDecoration myBoxDecoration(String namePic) {
+    return BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('images/$namePic'),
+        fit: BoxFit.cover,
       ),
     );
   }
