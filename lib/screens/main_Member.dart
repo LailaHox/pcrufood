@@ -37,7 +37,7 @@ class _MainMemberState extends State<MainMember> {
             title: Text(nameUser == null ? 'Main Member' : '$nameUser '),
             actions: <Widget>[
               IconButton(
-                  onPressed: () => signOut(),
+                  onPressed: () => signOut(context),
                   icon: Icon(
                     Icons.exit_to_app_outlined,
                   ))

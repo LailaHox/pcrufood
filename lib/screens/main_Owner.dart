@@ -72,7 +72,7 @@ class _MainOwnerState extends State<MainOwner> {
       leading: Icon(Icons.exit_to_app),
       title: Text('Sign Out'),
       subtitle: Text('Sign Out และ กลับไป หน้าแรก'),
-      onTap: () => signOut());
+      onTap: () => signOut(context));
 
   UserAccountsDrawerHeader showHead() {
     return UserAccountsDrawerHeader(

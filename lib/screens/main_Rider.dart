@@ -16,7 +16,7 @@ class _MainRiderState extends State<MainRider> {
     return Scaffold(
       appBar: AppBar(title: Text('PCRU FOOD'), actions: <Widget>[
         IconButton(
-            onPressed: () => signOut(),
+            onPressed: () => signOut(context),
             icon: Icon(
               Icons.exit_to_app_outlined,
             ))
