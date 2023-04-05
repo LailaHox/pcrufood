@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pcrufood/utility/normalDialog.dart';
 import 'package:pcrufood/utility/mystyle.dart';
 
+import '../utility/myconstant.dart';
+
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
@@ -275,7 +277,7 @@ class _SignUpState extends State<SignUp> {
       );
   Future<Null> checkUser() async {
     String url =
-        'http://192.168.1.49/test/getIDWhereUser.php?isAdd=true&id=$id';
+        '${MyConstant().domain}/foodapp/getIDWhereUser.php?isAdd=true&id=$id';
     try {
       Response response = await Dio().get(url);
       if (response.toString() == 'null') {
@@ -288,7 +290,7 @@ class _SignUpState extends State<SignUp> {
 
   Future<Null> registerThread() async {
     String url =
-        'http://192.168.1.49/test/addUser.php?isAdd=true&id=$id&password=$password&name=$name&idcard=$idcard&phonenumber=$phonenumber&chooseType=$chooseType';
+        '${MyConstant().domain}/foodapp/addUser.php?isAdd=true&id=$id&password=$password&name=$name&idcard=$idcard&phonenumber=$phonenumber&chooseType=$chooseType';
     try {
       Response respons = await Dio().get(url);
       print('res =$respons');

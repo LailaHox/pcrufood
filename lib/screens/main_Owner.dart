@@ -1,6 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:pcrufood/widget/infoOwner.dart';
+import 'package:pcrufood/widget/menu.dart';
+import 'package:pcrufood/widget/orderList.dart';
 
 import '../utility/mystyle.dart';
 import '../utility/signOut.dart';
@@ -13,11 +14,15 @@ class MainOwner extends StatefulWidget {
 }
 
 class _MainOwnerState extends State<MainOwner> {
+  Widget currentWidget = OrderList();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PCRU FOOD'), actions: <Widget>[]),
+      appBar: AppBar(
+        title: Text('PCRU FOOD'),
+      ),
       drawer: showDrawer(),
+      body: currentWidget,
     );
   }
 
@@ -36,36 +41,36 @@ class _MainOwnerState extends State<MainOwner> {
         leading: Icon(Icons.home),
         title: Text('รายการอาหารที่ ลูกค้าสั่ง'),
         subtitle: Text('รายการอาหารที่ยังไม่ได้ ทำส่งลูกค้า'),
-        // onTap: () {
-        //   setState(() {
-        //     currentWidget = OrderListShop();
-        //   });
-        //   Navigator.pop(context);
-        // },
+        onTap: () {
+          setState(() {
+            currentWidget = OrderList();
+          });
+          Navigator.pop(context);
+        },
       );
 
   ListTile foodMenu() => ListTile(
         leading: Icon(Icons.fastfood),
         title: Text('รายการอาหาร'),
         subtitle: Text('รายการอาหาร ของร้าน'),
-        // onTap: () {
-        //   setState(() {
-        //     currentWidget = ListFoodMenuShop();
-        //   });
-        //   Navigator.pop(context);
-        // },
+        onTap: () {
+          setState(() {
+            currentWidget = Menu();
+          });
+          Navigator.pop(context);
+        },
       );
 
   ListTile infomationMenu() => ListTile(
         leading: Icon(Icons.info),
         title: Text('รายละเอียด ของร้าน'),
         subtitle: Text('รายละเอียด ของร้าน พร้อม Edit'),
-        // onTap: () {
-        //   setState(() {
-        //     currentWidget = InfomationShop();
-        //   });
-        //   Navigator.pop(context);
-        // },
+        onTap: () {
+          setState(() {
+            currentWidget = Info();
+          });
+          Navigator.pop(context);
+        },
       );
 
   ListTile signOutMenu() => ListTile(

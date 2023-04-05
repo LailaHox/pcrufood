@@ -10,6 +10,8 @@ import 'package:pcrufood/utility/mystyle.dart';
 import 'package:pcrufood/utility/normalDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utility/myconstant.dart';
+
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
@@ -67,7 +69,7 @@ class _SignInState extends State<SignIn> {
 
   Future<void> checkAuthen() async {
     String url =
-        'http://192.168.1.49/test/getIDWhereUser.php?isAdd=true&id=$id';
+        '${MyConstant().domain}/foodapp/getIDWhereUser.php?isAdd=true&id=$id';
     try {
       Response response = await Dio().get(url);
       print('res = $response');
@@ -101,7 +103,7 @@ class _SignInState extends State<SignIn> {
   Future<void> routeToService(myWidget, userModel) async {
     // Future<void> routeToService(Widget myWidget, UserModel userModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString('id', userModel.id);
+    preferences.setString('idUser', userModel.idUser);
     preferences.setString('name', userModel.name);
     preferences.setString('chooseType', userModel.chooseType);
     MaterialPageRoute route = MaterialPageRoute(
