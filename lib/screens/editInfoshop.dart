@@ -172,34 +172,6 @@ class _EditInfoShopState extends State<EditInfoShop> {
     }
   }
 
-  // Future<void> editThread() async {
-  //   Random random = Random();
-  //   int i = random.nextInt(100000);
-  //   String nameFile = 'editShop$i.jpg';
-
-  //   Map<String, dynamic> map = Map();
-  //   map['file'] = await MultipartFile.fromFile(file!.path, filename: nameFile);
-  //   FormData formData = FormData.fromMap(map);
-
-  //   String urlUpload = '${MyConstant().domain}/foodapp/saveshop.php';
-  //   await Dio().post(urlUpload, data: formData).then((value) async {
-  //     urlPicture = '/foodapp/Shop/$nameFile';
-
-  //     String idUser = userModel!.idUser!;
-  //     // print('idUser = $idUser');
-
-  //     String url =
-  //         '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameShop&Address=$address&PhoneShop=$phoneShop&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
-
-  //     Response response = await Dio().get(url);
-  //     if (response.toString() == 'true') {
-  //       Navigator.push;
-  //     } else {
-  //       normalDialog(context, 'แก้ไขไม่ได้ กรุณาลองใหม่');
-  //     }
-  //   });
-  // }
-
   Set<Marker> currentMarker() {
     return <Marker>[
       Marker(
