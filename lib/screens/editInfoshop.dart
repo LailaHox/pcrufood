@@ -12,6 +12,7 @@ import 'package:pcrufood/utility/myconstant.dart';
 import 'package:pcrufood/utility/mystyle.dart';
 import 'package:pcrufood/utility/normalDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pcrufood/screens/main_Owner.dart';
 
 class EditInfoShop extends StatefulWidget {
   const EditInfoShop({super.key});
@@ -72,6 +73,7 @@ class _EditInfoShopState extends State<EditInfoShop> {
     return Scaffold(
       body: userModel == null ? MyStyle().showProgress() : showContent(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('แก้ไข รายละเอียดร้าน'),
       ),
     );
@@ -116,7 +118,6 @@ class _EditInfoShopState extends State<EditInfoShop> {
             children: <Widget>[
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pop(context);
                   editThread();
                 },
                 child: Text('ตกลง'),
@@ -133,32 +134,71 @@ class _EditInfoShopState extends State<EditInfoShop> {
   }
 
   Future<void> editThread() async {
-    Random random = Random();
-    int i = random.nextInt(100000);
-    String nameFile = 'editShop$i.jpg';
-
-    Map<String, dynamic> map = Map();
-    map['file'] = await MultipartFile.fromFile(file!.path, filename: nameFile);
-    FormData formData = FormData.fromMap(map);
-
-    String urlUpload = '${MyConstant().domain}/foodapp/saveshop.php';
-    await Dio().post(urlUpload, data: formData).then((value) async {
-      urlPicture = '/foodapp/Shop/$nameFile';
-
-      String idUser = userModel!.idUser!;
-      // print('idUser = $idUser');
-
+    if (file != null) {
+      String urlUpload = '${MyConstant().domain}/foodapp/saveshop.php';
+      Random random = Random();
+      int i = random.nextInt(1000000);
+      String? nameFile = 'seeobj$i.jpg';
+      Map<String, dynamic> map = Map();
+      map['file'] =
+          await MultipartFile.fromFile(file!.path, filename: nameFile);
+      FormData formData = FormData.fromMap(map);
+      await Dio().post(urlUpload, data: formData);
+      String urlPathImage = '$nameFile';
+      // print('urlPathImage = /foodapp/Shop/$nameFile');
+      String? idUser = userModel!.idUser;
       String url =
           '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameShop&Address=$address&PhoneShop=$phoneShop&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
-
-      Response response = await Dio().get(url);
-      if (response.toString() == 'true') {
-        Navigator.pop(context);
-      } else {
-        normalDialog(context, 'แก้ไขไม่ได้ กรุณาลองใหม่');
-      }
-    });
+      await Dio().get(url).then((value) {
+        if (value.toString() == 'true') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) => MainOwner()),
+          );
+        }
+      });
+    } else {
+      String? idUser = userModel!.idUser;
+      String url =
+          '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameShop&Address=$address&PhoneShop=$phoneShop&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
+      await Dio().get(url).then((value) {
+        if (value.toString() == 'true') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) => MainOwner()),
+          );
+        } else {
+          // normalDialog(context, 'กรุณาลองใหม่ มีอะไร ? ผิดพลาด');
+        }
+      });
+    }
   }
+
+  // Future<void> editThread() async {
+  //   Random random = Random();
+  //   int i = random.nextInt(100000);
+  //   String nameFile = 'editShop$i.jpg';
+
+  //   Map<String, dynamic> map = Map();
+  //   map['file'] = await MultipartFile.fromFile(file!.path, filename: nameFile);
+  //   FormData formData = FormData.fromMap(map);
+
+  //   String urlUpload = '${MyConstant().domain}/foodapp/saveshop.php';
+  //   await Dio().post(urlUpload, data: formData).then((value) async {
+  //     urlPicture = '/foodapp/Shop/$nameFile';
+
+  //     String idUser = userModel!.idUser!;
+  //     // print('idUser = $idUser');
+
+  //     String url =
+  //         '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameShop&Address=$address&PhoneShop=$phoneShop&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
+
+  //     Response response = await Dio().get(url);
+  //     if (response.toString() == 'true') {
+  //       Navigator.push;
+  //     } else {
+  //       normalDialog(context, 'แก้ไขไม่ได้ กรุณาลองใหม่');
+  //     }
+  //   });
+  // }
 
   Set<Marker> currentMarker() {
     return <Marker>[

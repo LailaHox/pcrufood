@@ -41,7 +41,6 @@ class _ShowListShopState extends State<ShowListShop> {
           print('nameShop =${model.nameShop}');
           setState(() {
             userModels.add(model);
-            userModels.add(model);
             shopCards.add(createCard(model, index));
             index++;
           });

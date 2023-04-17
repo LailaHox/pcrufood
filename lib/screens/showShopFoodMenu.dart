@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pcrufood/model/user_model.dart';
 
+import '../model/user_model.dart';
 import '../utility/mystyle.dart';
 import '../widget/aboutShop.dart';
+import '../widget/showmenufood.dart';
 
 class ShowShopFoodMenu extends StatefulWidget {
-  const ShowShopFoodMenu({super.key, required UserModel userModel});
+  final UserModel userModel;
+  ShowShopFoodMenu({Key? key, required this.userModel}) : super(key: key);
 
   @override
   State<ShowShopFoodMenu> createState() => _ShowShopFoodMenuState();
@@ -19,26 +22,26 @@ class _ShowShopFoodMenuState extends State<ShowShopFoodMenu> {
   @override
   void initState() {
     super.initState();
-    userModel = userModel;
-    // listWidgets.add(AboutShop(
-    //   userModel: userModel!,
-    // ));
-    // listWidgets.add(ShowMenuFood(
-    //   userModel: userModel,
-    // ));
+    userModel = widget.userModel;
+    listWidgets.add(AboutShop(
+      userModel: userModel!,
+    ));
+    listWidgets.add(ShowMenuFood(
+      userModel: userModel!,
+    ));
   }
 
   BottomNavigationBarItem aboutShopNav() {
     return BottomNavigationBarItem(
       icon: Icon(Icons.restaurant),
-      // title: Text('รายละเอียดร้าน'),
+      label: 'รายละเอียดร้าน',
     );
   }
 
   BottomNavigationBarItem showMenuFoodNav() {
     return BottomNavigationBarItem(
       icon: Icon(Icons.restaurant_menu),
-      // title: Text('เมนูอาหาร'),
+      label: 'เมนูอาหาร',
     );
   }
 
@@ -57,7 +60,7 @@ class _ShowShopFoodMenuState extends State<ShowShopFoodMenu> {
   }
 
   BottomNavigationBar showBottonNavigationBar() => BottomNavigationBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.purple,
         selectedItemColor: Colors.white,
         currentIndex: indexPage,
         onTap: (value) {

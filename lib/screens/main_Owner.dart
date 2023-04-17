@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pcrufood/widget/infoOwner.dart';
 import 'package:pcrufood/widget/menu.dart';
 import 'package:pcrufood/widget/orderList.dart';
 
 import '../utility/mystyle.dart';
+import '../utility/normalDialog.dart';
 import '../utility/signOut.dart';
 
 class MainOwner extends StatefulWidget {
@@ -15,6 +19,41 @@ class MainOwner extends StatefulWidget {
 
 class _MainOwnerState extends State<MainOwner> {
   Widget currentWidget = OrderList();
+
+  @override
+  void initState() {
+    super.initState();
+    // aboutNotification();
+  }
+
+  // Future<void> aboutNotification() async {
+  //   if (Platform.isAndroid) {
+  //     print('aboutNoti Work Android');
+
+  //     FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  //     await firebaseMessaging.configure(
+  //       onLaunch: (message) async {
+  //         print('Noti onLaunch');
+  //       },
+  //       onResume: (message) async {
+  //         String title = message['data']['title'];
+  //         String body = message['data']['body'];
+  //         print('Noti onResume ${message.toString()}');
+  //         print('title = $title, body = $body');
+  //         normalDialog(context, title, body);
+  //       },
+  //       onMessage: (message) async {
+  //         print('Noti onMessage ${message.toString()}');
+  //         String title = message['notification']['title'];
+  //         String notiMessage = message['notification']['body'];
+  //         normalDialog(context, title, notiMessage);
+  //       },
+  //     );
+  //   } else if (Platform.isIOS) {
+  //     print('aboutNoti Work iOS');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -22,7 +22,7 @@ class addInfoOwner extends StatefulWidget {
 class _addInfoOwnerState extends State<addInfoOwner> {
   double? lat, lng;
   File? file;
-  String? nameshop, address, phoneShop, urlImage;
+  String? nameshop, address, PhoneShop, urlImage;
 
   @override
   void initState() {
@@ -33,8 +33,8 @@ class _addInfoOwnerState extends State<addInfoOwner> {
   Future<void> findLatLng() async {
     LocationData? locationData = await findLocationData();
     setState(() {
-      lat = locationData?.latitude;
-      lng = locationData?.longitude;
+      lat = locationData!.latitude;
+      lng = locationData.longitude;
     });
     print('lat = $lat, lng = $lng');
   }
@@ -84,8 +84,8 @@ class _addInfoOwnerState extends State<addInfoOwner> {
               nameshop!.isEmpty ||
               address == null ||
               address!.isEmpty ||
-              phoneShop == null ||
-              phoneShop!.isEmpty) {
+              PhoneShop == null ||
+              PhoneShop!.isEmpty) {
             normalDialog(context, 'กรุณากรอกข้อมูลทุกช่อง');
           } else if (file == null) {
             normalDialog(context, 'กรุณาเลือกรูปภาพ');
@@ -133,7 +133,7 @@ class _addInfoOwnerState extends State<addInfoOwner> {
     String? idUser = preferences.getString('idUser');
 
     String url =
-        '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameshop&Address=$address&phoneShop=$phoneShop&UrlPicture=$urlImage&Lat=$lat&Lng=$lng';
+        '${MyConstant().domain}/foodapp/editUserWhereIdUser.php?isAdd=true&idUser=$idUser&NameShop=$nameshop&Address=$address&PhoneShop=$PhoneShop&UrlPicture=$urlImage&Lat=$lat&Lng=$lng';
 
     await Dio().get(url).then((value) {
       if (value.toString() == 'true') {
@@ -256,7 +256,7 @@ class _addInfoOwnerState extends State<addInfoOwner> {
           Container(
             width: 250.0,
             child: TextField(
-              onChanged: (value) => phoneShop = value.trim(),
+              onChanged: (value) => PhoneShop = value.trim(),
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'เบอร์ติดต่อร้านค้า :',
