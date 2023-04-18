@@ -52,6 +52,12 @@ class MyStyle {
             fontSize: 24, color: Colors.blue, fontWeight: FontWeight.bold),
       );
 
+  Text showTitle2(String title) => Text(
+        title,
+        style: TextStyle(
+            fontSize: 16, color: Colors.blue, fontWeight: FontWeight.bold),
+      );
+
   Container showlogo(String namePic) {
     return Container(
       width: 100,

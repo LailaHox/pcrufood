@@ -71,11 +71,13 @@ class _ShowCartState extends State<ShowCart> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildNameShop(),
+            // buildNameShop(),
             buildHeadTitle(),
             buildListFood(),
             Divider(),
+            MyStyle().mySizebox(),
             buildTotal(),
+            MyStyle().mySizebox(),
             buildClearCartButton(),
             buildOrderButton(),
           ],
@@ -122,7 +124,7 @@ class _ShowCartState extends State<ShowCart> {
                 color: Colors.white,
               ),
               label: Text(
-                'Order',
+                'สั่งอาหาร',
                 style: TextStyle(color: Colors.white),
               )),
         ),
@@ -180,20 +182,20 @@ class _ShowCartState extends State<ShowCart> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 3,
-            child: MyStyle().showTitle('ราการอาหาร'),
+            flex: 2,
+            child: MyStyle().showTitle2('ราการอาหาร'),
           ),
           Expanded(
             flex: 1,
-            child: MyStyle().showTitle('ราคา'),
+            child: MyStyle().showTitle2('ราคา'),
           ),
           Expanded(
             flex: 1,
-            child: MyStyle().showTitle('จำนวน'),
+            child: MyStyle().showTitle2('จำนวน'),
           ),
           Expanded(
             flex: 1,
-            child: MyStyle().showTitle('ผลรวม'),
+            child: MyStyle().showTitle2('ผลรวม'),
           ),
           Expanded(
             flex: 1,
@@ -211,7 +213,7 @@ class _ShowCartState extends State<ShowCart> {
         itemBuilder: (context, index) => Row(
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(cartModels[index].nameFood!),
             ),
             Expanded(
@@ -319,8 +321,8 @@ class _ShowCartState extends State<ShowCart> {
     String sum = sums.toString();
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? idMem = preferences.getString('id');
-    String? nameUser = preferences.getString('Name');
+    String? idMem = preferences.getString('idUser');
+    String? nameUser = preferences.getString('name');
 
     print(
         'orderDateTime = $orderDateTime, idMem = $idMem, nameUser = $nameUser, idShop = $idShop, nameShop = $nameShop, distance = $distance, transport = $transport');
@@ -328,12 +330,12 @@ class _ShowCartState extends State<ShowCart> {
         'idFood = $idFood, nameFood = $nameFood, price = $price, amount = $amount, sum = $sum');
 
     String url =
-        '${MyConstant().domain}/fooapp/addOrder.php?isAdd=true&OrderDateTime=$orderDateTime&idMem=$idMem&NameUser=$nameUser&idShop=$idShop&NameShop=$nameShop&Distance=$distance&Transport=$transport&idFood=$idFood&NameFood=$nameFood&Price=$price&Amount=$amount&Sum=$sum&idRider=none&Status=UserOrder';
+        '${MyConstant().domain}/foodapp/addOrder.php?isAdd=true&OrderDateTime=$orderDateTime&idMem=$idMem&NameUser=$nameUser&idShop=$idShop&NameShop=$nameShop&Distance=$distance&Transport=$transport&idFood=$idFood&NameFood=$nameFood&Price=$price&Amount=$amount&Sum=$sum&idRider=none&Status=UserOrder';
 
     await Dio().get(url).then((value) {
       if (value.toString() == 'true') {
         clearAllSQLite();
-        notificationToShop(idShop);
+        // notificationToShop(idShop);
       } else {
         normalDialog(context, 'ไม่สามารถ Order ได้ กรุณาลองใหม่');
       }
@@ -351,30 +353,30 @@ class _ShowCartState extends State<ShowCart> {
     });
   }
 
-  Future<void> notificationToShop(String idShop) async {
-    String urlFindToken =
-        '${MyConstant().domain}/UngFood/getUserWhereId.php?isAdd=true&id=$idShop';
-    await Dio().get(urlFindToken).then((value) {
-      var result = json.decode(value.data);
-      print('result ==> $result');
-      for (var json in result) {
-        UserModel model = UserModel.fromJson(json);
-        String? tokenShop = model.token;
-        print('tokenShop ==>> $tokenShop');
+  // Future<void> notificationToShop(String idShop) async {
+  //   String urlFindToken =
+  //       '${MyConstant().domain}/foodapp/getIDWhereIdUser.php?isAdd=true&id=$idShop';
+  //   await Dio().get(urlFindToken).then((value) {
+  //     var result = json.decode(value.data);
+  //     print('result ==> $result');
+  //     for (var json in result) {
+  //       UserModel model = UserModel.fromJson(json);
+  //       String? tokenShop = model.token;
+  //       print('tokenShop ==>> $tokenShop');
 
-        String title = 'มี Order จากลูกค้า';
-        String body = 'มีการสั่งอาหาร จากลูกค้า ครับ';
-        String urlSendToken =
-            '${MyConstant().domain}/foodapp/apiNotification.php?isAdd=true&token=$tokenShop&title=$title&body=$body';
+  //       String title = 'มี Order จากลูกค้า';
+  //       String body = 'มีการสั่งอาหาร จากลูกค้า ครับ';
+  //       String urlSendToken =
+  //           '${MyConstant().domain}/foodapp/apiNotification.php?isAdd=true&token=$tokenShop&title=$title&body=$body';
 
-        sendNotificationToShop(urlSendToken);
-      }
-    });
-  }
+  //       sendNotificationToShop(urlSendToken);
+  //     }
+  //   });
+  // }
 
-  Future<void> sendNotificationToShop(String urlSendToken) async {
-    await Dio().get(urlSendToken).then(
-          (value) => normalDialog(context, 'ส่ง Order ไปที่ ร้านค้าแล้ว'),
-        );
-  }
+  // Future<void> sendNotificationToShop(String urlSendToken) async {
+  //   await Dio().get(urlSendToken).then(
+  //         (value) => normalDialog(context, 'ส่ง Order ไปที่ ร้านค้าแล้ว'),
+  //       );
+  // }
 }

@@ -209,7 +209,7 @@ class _ShowStatusOrderState extends State<ShowStatusOrder> {
 
   Future<void> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    idMem = preferences.getString('id');
+    idMem = preferences.getString('idUser');
     // print('idUser = $idUser');
     readOrderFromIdUser();
   }
@@ -217,7 +217,7 @@ class _ShowStatusOrderState extends State<ShowStatusOrder> {
   Future<void> readOrderFromIdUser() async {
     if (idMem != null) {
       String url =
-          '${MyConstant().domain}/foodapp/getOrderWhereIdUser.php?isAdd=true&idUser=$idMem';
+          '${MyConstant().domain}/foodapp/getOrderWhereIdMem.php?isAdd=true&idMem=$idMem';
 
       Response response = await Dio().get(url);
       // print('respose ######==> $response');
