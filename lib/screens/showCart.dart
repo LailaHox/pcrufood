@@ -288,7 +288,7 @@ class _ShowCartState extends State<ShowCart> {
     );
   }
 
-  Future<Null> orderThread() async {
+  Future<void> orderThread() async {
     DateTime dateTime = DateTime.now();
     // print(dateTime.toString());
     String orderDateTime = DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
@@ -351,7 +351,7 @@ class _ShowCartState extends State<ShowCart> {
     });
   }
 
-  Future<Null> notificationToShop(String idShop) async {
+  Future<void> notificationToShop(String idShop) async {
     String urlFindToken =
         '${MyConstant().domain}/UngFood/getUserWhereId.php?isAdd=true&id=$idShop';
     await Dio().get(urlFindToken).then((value) {
@@ -365,7 +365,7 @@ class _ShowCartState extends State<ShowCart> {
         String title = 'มี Order จากลูกค้า';
         String body = 'มีการสั่งอาหาร จากลูกค้า ครับ';
         String urlSendToken =
-            '${MyConstant().domain}/UngFood/apiNotification.php?isAdd=true&token=$tokenShop&title=$title&body=$body';
+            '${MyConstant().domain}/foodapp/apiNotification.php?isAdd=true&token=$tokenShop&title=$title&body=$body';
 
         sendNotificationToShop(urlSendToken);
       }

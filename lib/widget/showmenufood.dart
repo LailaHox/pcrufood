@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +37,7 @@ class _ShowMenuFoodState extends State<ShowMenuFood> {
     findLocation();
   }
 
-  Future<Null> findLocation() async {
+  Future<void> findLocation() async {
     location.onLocationChanged.listen((event) {
       lat1 = event.latitude;
       lng1 = event.longitude;
@@ -46,10 +45,10 @@ class _ShowMenuFoodState extends State<ShowMenuFood> {
     });
   }
 
-  Future<Null> readFoodMenu() async {
+  Future<void> readFoodMenu() async {
     idShop = userModel!.idUser;
     String url =
-        '${MyConstant().domain}/fooapp/getFoodWhereIdShop.php?isAdd=true&idShop=$idShop';
+        '${MyConstant().domain}/foodapp/getFoodWhereIdShop.php?isAdd=true&idShop=$idShop';
     Response response = await Dio().get(url);
     // print('res --> $response');
 
@@ -135,7 +134,7 @@ class _ShowMenuFoodState extends State<ShowMenuFood> {
     );
   }
 
-  Future<Null> confirmOrder(int index) async {
+  Future<void> confirmOrder(int index) async {
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
@@ -290,11 +289,11 @@ class _ShowMenuFoodState extends State<ShowMenuFood> {
       if (idShop == idShopSQLite) {
         await SQLiteHelper().insertDataToSQLite(cartModel).then((value) {
           print('Insert Success');
-          showToast('Insert Success');
+          showToast('เพิ่มรายการแล้ว');
         });
       } else {
         normalDialog(
-            context, 'ตะกร้ามี รายการอาหารของ ร้าน ${object[0].nameShop}');
+            context, 'ตะกร้ามี รายการอาหารของ ร้าน ${object[0].nameShop} อยู่');
       }
     }
   }

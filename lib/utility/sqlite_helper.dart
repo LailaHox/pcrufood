@@ -5,7 +5,7 @@ import '../model/cart_model.dart';
 
 class SQLiteHelper {
   final String nameDatabase = 'pcrufood.db';
-  final String tableDatabase = 'orderTABLE';
+  final String tableDatabase = 'orderTable';
   int version = 1;
 
   final String idColumn = 'id';
@@ -34,7 +34,7 @@ class SQLiteHelper {
     return openDatabase(join(await getDatabasesPath(), nameDatabase));
   }
 
-  Future<Null> insertDataToSQLite(CartModel cartModel) async {
+  Future<void> insertDataToSQLite(CartModel cartModel) async {
     Database database = await connectedDatabase();
     try {
       database.insert(

@@ -1,7 +1,7 @@
 class MyConstant {
   // String domain = 'http://192.168.1.49';
   String domain =
-      'https://ff67-2403-6200-8840-6888-b1c5-87a-67c6-ca4e.ngrok-free.app';
+      'https://5706-2403-6200-8840-6888-b56b-9f3-685c-421.ngrok-free.app';
   String keyId = 'id';
   String keyType = 'ChooseType';
   String keyName = 'Name';

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pcrufood/screens/main_Member.dart';
 import 'package:pcrufood/screens/main_Owner.dart';
@@ -24,6 +25,10 @@ class _HomeState extends State<Home> {
 
   Future<void> checkPreference() async {
     try {
+      // FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      // String? token = await firebaseMessaging.getToken();
+      // print('token ====>>> $token');
+
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String? choosType = preferences.getString('chooseType');
       if (choosType != null && choosType.isNotEmpty) {
